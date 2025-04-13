@@ -1,0 +1,289 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <title>Sport zone</title>
+
+
+</head>
+<style>
+    #cardrow:hover {
+
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav__links li a:hover {
+        text-decoration: none;
+    }
+
+    body {
+        font: 13px/20px "MONTSERRAT", Tahoma, Verdana, sans-serif;
+        color: #000000;
+        background: #ffffff;
+    }
+
+    .login {
+        position: relative;
+        margin: 30px auto;
+        padding: 20px 20px 20px;
+        width: 50vw;
+        background: rgb(226, 226, 226);
+        border-radius: 3px;
+    }
+
+    .login:before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        bottom: -8px;
+        left: -8px;
+        z-index: -1;
+    }
+
+    .login h1 {
+        margin: -20px -20px 21px;
+        line-height: 40px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #000000;
+        text-align: center;
+        text-shadow: 0 1px white;
+        border-radius: 3px 3px 0 0;
+        background-image: -webkit-linear-gradient(top, whiteffd, #eef2f5);
+        background-image: -moz-linear-gradient(top, whiteffd, #eef2f5);
+        background-image: -o-linear-gradient(top, whiteffd, #eef2f5);
+        background-image: linear-gradient(to bottom, whiteffd, #eef2f5);
+        -webkit-box-shadow: 0 1px whitesmoke;
+        box-shadow: 0 1px whitesmoke;
+    }
+
+    .login p {
+        margin: 20px 0 0;
+        width: 100%;
+
+    }
+
+    .login p:first-child {
+        margin-top: 0;
+    }
+
+    .login input[type=text],
+    .login input[type=password] {
+        width: 100%;
+
+    }
+
+    .login p.remember_me {
+        float: left;
+        margin-left: 20px;
+        line-height: 42px;
+    }
+
+    .login p.remember_me label {
+        font-size: 12px;
+        color: #9EACB2;
+        cursor: pointer;
+    }
+
+    .login p.remember_me input {
+        position: relative;
+        bottom: 1px;
+        margin-right: 4px;
+        vertical-align: middle;
+    }
+
+    .login p.submit {
+        text-align: right;
+    }
+
+    .login-help {
+        margin: 20px 0;
+        font-size: 11px;
+        color: white;
+        text-align: center;
+        text-shadow: 0 1px #2a85a1;
+    }
+
+    .login-help a {
+        color: #cce7fa;
+        text-decoration: none;
+    }
+
+    .login-help a:hover {
+        text-decoration: underline;
+    }
+
+    :-moz-placeholder {
+        color: #9EACB2 !important;
+        font-size: 13px;
+    }
+
+    ::-webkit-input-placeholder {
+        color: #B6BEC1;
+        font-size: 13px;
+    }
+
+    input {
+        font-family: 'MONTSERRAT', Tahoma, Verdana, sans-serif;
+        font-size: 12px;
+        width: 100%;
+
+    }
+
+    input[type=text],
+    textarea {
+        margin: 4px;
+        padding: 5px 20px;
+        width: 100%;
+        height: 46px;
+        color: #404040;
+        background: white;
+        border: 2px solid;
+        border-color: #9EACB2;
+        border-radius: 4px;
+
+    }
+
+    input[type=text]:focus {
+        border-color: #6EC3C7;
+        outline-color: #6EC3C7;
+        outline-offset: 2;
+    }
+
+    input[type=submit] {
+        padding: 0 40px;
+        height: 46px;
+        font-size: 12px;
+        color: #fff;
+        text-shadow: none;
+        background: #00B87F;
+        border: 1px solid;
+        border-color: #07A06D;
+        border-radius: 4px;
+    }
+
+
+    input[type=submit]:active {
+        background: #07A06D;
+    }
+
+    input[type=submit]:hover {
+        background: #07A06D;
+    }
+
+    textarea {
+        width: 100%;
+    }
+
+    .lt-ie9 input[type=text],
+    .lt-ie9 input[type=password] {
+        line-height: 34px;
+    }
+</style>
+
+<body>
+
+    <header class="header" style="background-color: rgb(0, 100, 67);">
+        <nav>
+            <div class="nav__bar">
+               
+                <div class="logo" style="width: fit-content;height: 60px;padding: 0;">
+                    <a href="{% url 'ownerhome' %}" style="padding:0"><img src="{% static 'logo.png' %}" alt="logo"
+                        style="width: 200px;" /></a>
+                  </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+
+            <ul class="nav__links " id="nav-links" style="font-size: 15px;">
+                <li><a href="{% url 'ownerhome' %}">Owner Home</a></li>
+                <li><a href="{% url 'ownersearchturf' %}">View Your Turfs </a></li>
+                <li><a href="{% url 'allbookings' %}">Your Booking </a></li>
+                
+            </ul>
+
+            <a href="{% url 'userlogout' %}"><button class="btn nav__btn">Logout</button></a>
+
+
+        </nav>
+
+
+    </header>
+    <section class="section__container booking__container mt-3">
+        <div class="login">
+            <h1>Add New Turf</h1>
+            <form method="post" action="{% url 'addturf' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <p><label for="open_time">Turf Name</label>
+                    <input type="text" name="turf_name"  placeholder="Turf Name" required>
+                </p>
+                <p><label for="open_time">Game Type</label>
+                    <input type="text" name="game_type" placeholder="Game Type" required>
+                </p>
+                <p><label for="open_time">Turf location</label>
+                    <input type="text" name="location_name"  placeholder="Location Name" required>
+                </p>
+                <p><label for="open_time">Turf location Url</label>
+                    <input type="text" name="location_url" placeholder="Location Url" required>
+                </p>
+                <p><label for="open_time">Opening Time</label>
+                    <input type="time" name="open_time" value="09:00" placeholder="Opening Time" required>
+                </p>
+                <p>
+                    <label for="open_time">Closing Time</label>
+                    <input type="time" name="close_time" value="10:00" placeholder="Closing Time" required>
+                </p>
+                <p>
+                    <label for="open_time">Turf Discription</label>
+                    <textarea name="discription" placeholder="Turf discription" required></textarea>
+                </p>
+              
+                <p><label for="open_time">Rent for an hour</label>
+                    <input type="text" name="rent" placeholder="Rent/hr" value="1000" required>
+                </p>
+
+                <p>
+                    <label for="open_time">Turf Image</label>
+                    <input type="file" name="image" placeholder="Number Of Courts" required>
+                </p>
+
+
+                <p class="submit"><input type="submit" name="submit" value="Add Turf"></p>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- <iframe
+        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3933.970133926544!2d76.61323807382871!3d9.597839990488014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwMzUnNTIuMiJOIDc2wrAzNic1Ni45IkU!5e0!3m2!1sen!2sin!4v1730377507448!5m2!1sen!2sin"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+ -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        /* Ensure that the PDF is generated in A6 size */
+        @page {
+            size: A6;
+            margin: 0; /* Optional: removes margin if not needed */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333;
+            width: 105mm;  /* A6 Width */
+            height: 148mm; /* A6 Height */
+        }
+
+        .ticket {
+            background: linear-gradient(135deg, #28a745, #155724);
+            border: 2px dashed #fff;
+            border-radius: 8px;
+            padding: 50px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            color: #fff;
+            position: relative;
+            margin: 5mm auto;
+        }
+
+        .ticket h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px dashed #fff;
+            padding-bottom: 8px;
+        }
+
+        .ticket p {
+            margin: 5px 0;
+            line-height: 1.4;
+            font-size: 12px;
+            color: #f8f9fa;
+        }
+
+        .ticket p strong {
+            color: #ffcc00;
+        }
+
+        ol {
+            margin: 5px 0 0 20px;
+            padding: 0;
+        }
+
+        ol li {
+            font-size: 12px;
+            color: #f0e68c;
+        }
+
+        .highlight {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 8px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .turf-image {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .turf-image img {
+            max-width: 70%; /* Adjusted for A6 size */
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #fff;
+        }
+
+        .ticket-footer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 10px;
+            color: #f0e68c;
+        }
+
+        .ticket-footer span {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ticket">
+        <div class="turf-image">
+            <img src="https://private-user-images.githubusercontent.com/87005083/389257819-1d8bc6bc-8738-4111-8805-e2e371222580.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzI0Mzg3NDcsIm5iZiI6MTczMjQzODQ0NywicGF0aCI6Ii84NzAwNTA4My8zODkyNTc4MTktMWQ4YmM2YmMtODczOC00MTExLTg4MDUtZTJlMzcxMjIyNTgwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTI0VDA4NTQwN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWFhZTA2Nzg1YmMwYTE3NTM1ZDIzZjM1Mzk2YWQ5ODdlYzFlOTIxZTJkZmMzNjE2MWQzMDdmMzgyY2VkNTVjY2EmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.8H8Nh5mQdyaD0fGytMzOKZ0Www_o_ER7mj5irhjBMZI" alt="Turf Logo" style="width: 200px;" />
+        </div>
+        <h1>Turf Game Ticket</h1>
+        <p><strong>Booking ID:</strong> <span class="highlight">{{ booking.id }}</span></p>
+        <p><strong>Email:</strong> {{ user }}</p>
+        <p><strong>Turf:</strong> {{ turf_name }}</p>
+        <p><strong>Date & Time:</strong> {{ date|date:"Y-m-d H:i A" }}</p>
+        <p><strong>Slots:</strong></p>
+        <ol>
+            {% for i in booking.slots %}
+            <li>{{ i.start_time }} - {{ i.end_time }}</li>
+            {% endfor %}
+        </ol>
+        <p><strong>Price:</strong> <span class="highlight">₹{{ price }}</span></p>
+        <div class="ticket-footer">
+            Thank you for booking! <br>
+            <span>Have a great game!</span>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>User credentials</title>
+</head>
+<style>
+    /* ===== Google Font Import - Poppins ===== */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url("{% static 'tr.jpg'%}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .container {
+        position: relative;
+        max-width: 430px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 20px;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .role-selection {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0;
+        /* Adjusted margin for spacing */
+    }
+
+    .role-selection span {
+        margin-right: 10px;
+        font-size: 16px;
+    }
+
+    .role-selection label {
+        margin: 0 15px;
+        font-size: 16px;
+    }
+
+    .container .forms {
+        display: flex;
+        align-items: center;
+        height: 440px;
+        width: 200%;
+        transition: height 0.2s ease;
+    }
+
+    .container .form {
+        width: 50%;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.9);
+        transition: margin-left 0.18s ease;
+    }
+
+
+
+    .container .signup {
+        opacity: 0;
+        transition: opacity 0.09s ease;
+    }
+
+
+
+
+    .container .form .title {
+        position: relative;
+        font-size: 27px;
+        font-weight: 600;
+    }
+
+    .form .title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 30px;
+        background-color: #11ed69;
+        border-radius: 25px;
+    }
+
+    .form .input-field {
+        position: relative;
+        height: 40px;
+        width: 100%;
+        margin-top: 30px;
+    }
+
+    .input-field input {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        padding: 0 35px;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        border-bottom: 2px solid #ccc;
+        border-top: 2px solid transparent;
+        transition: all 0.2s ease;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .input-field input:is(:focus, :valid) {
+        border-bottom-color: #11ed69;
+    }
+
+    .input-field i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+        font-size: 23px;
+        transition: all 0.2s ease;
+    }
+
+    .input-field input:is(:focus, :valid)~i {
+        color: #40f46a;
+    }
+
+    .input-field i.icon {
+        left: 0;
+    }
+
+    .input-field i.showHidePw {
+        right: 0;
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .form .checkbox-text {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .checkbox-text .checkbox-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .checkbox-content input {
+        margin-right: 10px;
+        accent-color: #11ed69;
+    }
+
+    .form .text {
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form a.text {
+        color: #11ed69;
+        text-decoration: none;
+    }
+
+    .form a:hover {
+        text-decoration: underline;
+    }
+
+    .form .button {
+        margin-top: 35px;
+    }
+
+    .form .button input {
+        border: none;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        border-radius: 6px;
+        background-color: #11ed69;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .button input:hover {
+        background-color: #00ff0d;
+    }
+
+    .form .login-signup {
+        margin-top: 30px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="forms" style="height: fit-content;">
+            <div class="form login">
+                <p id="error-message" style="color: red;">
+                    {% for i in messages %}
+                    {{i}}
+                    {% endfor %}
+                </p>
+
+
+                <span class="title"> Registration</span>
+
+                <form action="{% url 'userregister' %}" method="post" id="regform">
+                    {% csrf_token %}
+                    <div class="input-field">
+                        <input type="text" placeholder="Enter your name" id="name" name="name" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" placeholder="Enter your email" id="email" name="email" required>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="password" placeholder="Create a password" id="pswd" name="pswd">
+                        <i class="uil uil-lock icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="password" placeholder="Confirm a password" id="cpswd" name="cpswd"
+                            required>
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                    </div>
+
+
+
+
+
+                    <div class="input-field button">
+                        <input type="submit" value="Signup">
+                    </div>
+                </form>
+
+                <div class="login-signup">
+                    <span class="text">Already a member?
+                        <a href="{% url 'userlogin' %}" class="text login-link">Login Now</a>
+                    </span>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <script>
+        const container = document.querySelector(".container"),
+            pwShowHide = document.querySelectorAll(".showHidePw"),
+            pwFields = document.querySelectorAll(".password"),
+            signUp = document.querySelector(".signup-link"),
+            login = document.querySelector(".login-link");
+
+        // js code to show/hide password and change icon
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                pwFields.forEach(pwField => {
+                    if (pwField.type === "password") {
+                        pwField.type = "text";
+
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("uil-eye-slash", "uil-eye");
+                        });
+                    } else {
+                        pwField.type = "password";
+
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("uil-eye", "uil-eye-slash");
+                        });
+                    }
+                });
+            });
+        });
+
+        //form validation 
+        document.getElementById("regform").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            function validateEmail(email) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailPattern.test(email);
+            }
+
+
+
+
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = "";
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("pswd").value.trim();
+            const cpassword = document.getElementById("cpswd").value.trim();
+
+
+
+            // Validation Rules
+            if (name === "") {
+                errorMessage.textContent = "Name is required.";
+                console.log("nameerr");
+
+                return;
+            }
+
+
+            if (!validateEmail(email)) {
+                errorMessage.textContent = "Invalid email address.";
+                console.log("email");
+
+                return;
+            }
+
+
+            if (password !== cpassword) {
+                errorMessage.textContent = "passwords arent matching";
+                console.log("pass no");
+
+                return;
+            }
+            if (password.length < 4) {
+                errorMessage.textContent = "password minimum length is 4";
+                console.log("pass len");
+
+                return;
+            }
+           
+            regform.submit();
+
+        });
+
+
+    </script>
+</body>
+
+</html>

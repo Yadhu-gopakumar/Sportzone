@@ -1,0 +1,195 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <title>Sport zone</title>
+
+
+</head>
+<style>
+    #cardrow:hover {
+
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav__links li a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+
+    <header class="header" style="background-color: rgb(0, 100, 67);">
+        <nav>
+            <div class="nav__bar">
+               
+                <div class="logo" style="width: fit-content;height: 60px;padding: 0;">
+                    <a href="{% url 'ownerhome' %}" style="padding:0"><img src="{% static 'logo.png' %}" alt="logo"
+                        style="width: 200px;" /></a>
+                  </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+
+            <ul class="nav__links " id="nav-links">
+                <li><a href="{% url 'ownerhome' %}">Owner Home</a></li>
+                <li><a href="{% url 'ownersearchturf' %}">View Your Turfs </a></li>
+                <li><a href="{% url 'addturf' %}">Add Turf </a></li>
+                <li><a href="{% url 'allbookings' %}">Your Booking </a></li>
+               
+
+            </ul>
+
+            <a href="{% url 'userlogout' %}"><button class="btn nav__btn">Logout</button></a>
+
+
+        </nav>
+
+        <section class="section__container booking__container mt-5">
+            <form action="{% url 'ownersearchturf' %}" class="booking__form">
+                {% csrf_token %}
+                <div class="input__group">
+
+                    <div>
+                        <label for="guest">Enter the name or location</label>
+                        <input type="text" placeholder="search..." name="query" />
+                    </div>
+                </div>
+                <div class="input__group input__btn">
+                    <button class="btn">Search Now</button>
+                </div>
+            </form>
+        </section>
+    </header>
+
+    <!-- list view of turfs-->
+    {% if turfs %}
+    <div class="container my-4">
+        <div style="text-align: center;" class="my-2">Your Turfs</div>
+
+        {% for i in turfs reversed %}
+
+        <div class="row justify-content-center mb-3 ">
+
+
+            <div class="col-md-12 col-xl-10">
+                <div class="card shadow-0 border rounded-4" id="cardrow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                    <img src={{i.image.url}} class="w-100" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <h5 style="color: rgb(36, 1, 70);">{{i.name}}</h5>
+                                <div class="d-flex flex-row">
+
+                                    <span>{{i.game_type}}</span>
+                                </div>
+                                <div class="mt-1 mb-0 text-muted small">
+
+
+                                    <span>{{i.location}}<br /></span>
+                                </div>
+                                <div class="mt-1 mb-0 text-muted small">
+
+
+                                    <span>Timing: {{i.open_time}} - {{i.close_time}} <br /></span>
+                                </div>
+
+                                <p class="text-truncate mb-4 mb-md-0">
+                                    {{i.discription}}
+                                </p><br>
+                                {% if not i.slots %}
+                                <p class="text-truncate mb-4 mb-md-0" style="color: brown;">
+                                    all slots booked
+                                </p>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <div class="d-flex flex-row align-items-center mb-1">
+                                    <h4 class="mb-1 me-1">{{i.rent}}</h4>
+                                    <span class="text-danger">/1 hr</span>
+                                </div>
+
+                                <div class="d-flex flex-column mt-4">
+                                    <a href="{% url 'editTurf' i.id %}" style="width: 100%;">
+                                        <button data-mdb-button-init data-mdb-ripple-init
+                                            class="btn btn-outline-primary btn-sm mt-2" type="button"
+                                            style="width: 100%;">Edit Details</button>
+                                    </a>
+                                    {% if not i.closed %}
+                                    <a href="{% url 'changeslots' i.id %}" style="width: 100%;">
+                                        <button data-mdb-button-init data-mdb-ripple-init
+                                            class="btn btn-outline-primary btn-sm mt-2" type="button"
+                                            style="width: 100%;">Close Turf</button>
+                                    </a>
+                                    {% else %}
+                                    <a href="{% url 'changeslots' i.id %}" style="width: 100%;">
+                                        <button data-mdb-button-init data-mdb-ripple-init
+                                            class="btn btn-outline-primary btn-sm mt-2" type="button"
+                                            style="width: 100%;background-color: grey;">Open Turf</button>
+                                    </a>
+                                    {% endif %}
+                                    <a href="{% url 'deleteTurf' i.id %}" style="width: 100%;">
+                                        <button class="btn btn-danger btn-sm mt-2" type="button"
+                                            style="width: 100%;background-color: rgb(246, 58, 58);">Delete Turf</button>
+                                    </a>
+                                    <a href="{% url 'turfbookings' i.id %}" style="width: 100%;">
+                                        <button data-mdb-button-init data-mdb-ripple-init
+                                            class="btn btn-outline-primary btn-sm mt-2" type="button" style="width: 100%;">
+                                            Booking Details
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="container py-5" style="text-align: center;">
+            no data available
+
+        </div>
+        {% endif %}
+    </div>
+
+
+
+    <!-- <iframe
+        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3933.970133926544!2d76.61323807382871!3d9.597839990488014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zOcKwMzUnNTIuMiJOIDc2wrAzNic1Ni45IkU!5e0!3m2!1sen!2sin!4v1730377507448!5m2!1sen!2sin"
+        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+ -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

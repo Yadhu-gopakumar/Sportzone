@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- ===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+    <title>Turf Registration Form</title> 
+</head>
+<body>
+  
+    <div class="container">
+        <div class="forms">
+            <!-- Registration Form -->
+            <div class="form signup">
+                <span class="title">Turf Registration</span>
+
+                <form action="#">
+                    <div class="input-field">
+                        <i class="uil uil-user icon"></i>
+                        <input type="text" placeholder="Turf Name" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="uil uil-user icon"></i>
+                        <input type="text" placeholder="Owner Name" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="uil uil-location-pin-alt icon"></i>
+                        <input type="text" placeholder="Location" required>
+                    </div>
+                    <div class="input-field">
+                        <i class="uil uil-money-bill icon"></i>
+                        <input type="number" placeholder="Price Per Hour" required>
+                    </div>
+
+                    <!-- Ground Type and Image Upload in a Row -->
+                    <div class="input-field-row">
+                        <div class="ground-type">
+                            <label>Ground Type:</label>
+                            <div>
+                                <input type="checkbox" id="cricket" name="groundType" value="Cricket">
+                                <label for="cricket">Cricket</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="football" name="groundType" value="Football">
+                                <label for="football">Football</label>
+                            </div>
+                        </div>
+                        <div class="file-upload">
+                            <label>Upload Turf Image</label>
+                            <input type="file" accept="image/*" required>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Turf Description Field -->
+                    <div class="input-field description-field">
+                        <textarea placeholder="Enter a brief description of the turf" required></textarea>
+                    </div>
+
+                    <div class="checkbox-text">
+                        <div class="checkbox-content">
+                            <input type="checkbox" id="termCon" required>
+                            <label for="termCon" class="text">I accepted all terms and conditions</label>
+                        </div>
+                    </div>
+
+                    <div class="input-field button">
+                        <input type="submit" value="Register">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* ===== Google Font Import - Poppins ===== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("{% static 'tr.jpg'%}");
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .container {
+            position: relative;
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: auto;
+        }
+        
+        .container .forms {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .container .form {
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .form .title {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+        }
+        
+        .form .title::before {
+            content: '';
+            position: absolute;
+            left: 10%;
+            bottom: 0;
+            height: 3px;
+            width: 30px;
+            background-color: #11ed69;
+            border-radius: 25px;
+            transform: translateX(-50%);
+        }
+        
+        .form .input-field {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            margin-top: 15px;
+        }
+        
+        .input-field input,
+        .input-field textarea {
+            height: 100%;
+            width: 100%;
+            padding-left: 40px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            border-bottom: 2px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .input-field .icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: #666;
+        }
+
+        .input-field-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 15px;
+        }
+
+        .ground-type,
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            width: 48%;
+        }
+
+        .ground-type label, .file-upload label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .ground-type div {
+            margin-top: 5px;
+        }
+
+        .form .checkbox-text {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .checkbox-text .checkbox-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .checkbox-content input {
+            margin-right: 10px;
+            accent-color: #11ed69;
+        }
+        
+        .form .button {
+            margin-top: 10px;
+        }
+        
+        .form .button input {
+            width: 100%; /* Ensure the button takes the full width */
+            text-align: center; /* Center the text */
+            border: none;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #11ed69;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .button input:hover {
+            background-color: #00ff0d;
+           
+        }
+
+        /* Enhanced Turf Description */
+        .description-field textarea {
+            height: 60px;
+            padding: 15px;
+            border-radius: 10px;
+            resize: none;
+            border: 1px solid #ccc;
+            background-color: rgba(245, 245, 245, 0.9);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .description-field textarea:focus {
+            border-color: #11ed69;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+    
+    <script>
+        const container = document.querySelector(".container"),
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password");
+
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                pwFields.forEach(pwField => {
+                    if(pwField.type === "password"){
+                        pwField.type = "text";
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("uil-eye-slash", "uil-eye");
+                        });
+                    } else {
+                        pwField.type = "password";
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("uil-eye", "uil-eye-slash");
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

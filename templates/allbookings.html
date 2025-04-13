@@ -1,0 +1,206 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+
+    <title>Sport zone-all bookings</title>
+
+
+</head>
+<style>
+    #cardrow:hover {
+
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav__links li a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<body>
+
+    <header class="header" style="background-color: rgb(0, 100, 67);">
+        <nav>
+            <div class="nav__bar">
+
+                <div class="logo" style="width: fit-content;height: 60px;padding: 0;">
+                    <a href="{% url 'ownerhome' %}" style="padding:0"><img src="{% static 'logo.png' %}" alt="logo"
+                            style="width: 200px;" /></a>
+                </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+
+            <ul class="nav__links " id="nav-links">
+                <li><a href="{% url 'ownerhome' %}">Owner Home</a></li>
+                <li><a href="{% url 'ownersearchturf' %}">View Your Turfs </a></li>
+                <li><a href="{% url 'addturf' %}">Add Turf </a></li>
+                <li><a href="{% url 'allbookings' %}">Your Booking </a></li>
+
+
+            </ul>
+
+            <a href="{% url 'userlogout' %}"><button class="btn nav__btn">Logout</button></a>
+
+
+        </nav>
+
+    </header>
+
+    <!-- list view of turfs-->
+
+    <div class="container my-4">
+        <div style="text-align: center;" class="my-2">Your Bookings</div>
+
+        {% for i in allbookings reversed %}
+
+        {{ i.booking_date|date:"Y-m-d H:i A" }}
+        <div class="row justify-content-center mb-3 ">
+
+
+            <div class="col-md-12 col-xl-10">
+
+                <div class="card shadow-0 border rounded-4" id="cardrow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                    <img src={{i.turf.image.url}} class="w-100" />
+
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-xl-6">
+                                <h5 style="color: rgb(36, 1, 70);">{{i.turf.name}}</h5>
+                                <div class="d-flex flex-row">
+
+                                    <span>{{i.turf.game_type}}</span>
+                                </div>
+                                <div class="mt-1 mb-0 text-muted small">
+
+
+                                    <!-- <span>{{i.slots}}<br /></span> -->
+                                </div>
+                                <div class="mt-1 mb-0 text-muted small">
+
+
+                                    <span>Timing: {{i.turf.open_time}} - {{i.turf.close_time}} <br /></span>
+                                </div>
+
+                                <p class="text-truncate mb-4 mb-md-0">
+                                    {{i.turf.discription}}
+                                </p>
+                            </div>
+                            <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                                <div class="d-flex flex-row align-items-center mb-1">
+                                    <h4 class="mb-1 me-1">{{i.turf.rent}}</h4>
+                                    <span class="text-danger">/1 hr</span>
+                                </div>
+
+                                <div class="d-flex flex-column mt-4">
+                                </div>
+                            </div>
+
+                            <div class="row mx-2 mt-2" style="width: 100%;">
+                                <div class="mb-3 text-end">
+                                    <button class="btn btn-success" onclick="printTable()">🖨️ Print to PDF</button>
+                                </div>
+
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                           
+                                            <th scope="col">email</th>
+                                            <th scope="col">slots</th>
+
+                                            <th scope="col">status</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for booking in i.slots %}
+
+                                        {% if booking.user %}
+                                        <tr>
+                                         
+
+                                            <td>{{booking.user}}</td>
+                                            <td style="height: fit-content;width:40%">
+                                                {{booking.start_time}}-{{booking.end_time}}</td>
+
+                                            <td>
+                                                {% if not booking.played %}
+                                                <a href="{% url 'playedstatus' booking.start_time i.id booking.user %}"
+                                                    style="width: fit-content;">
+                                                    <button class="btn btn-danger btn-sm" type="button"
+                                                        style="background-color: rgb(0, 131, 148);margin: 0;">not
+                                                        plyed</button>
+                                                </a>
+                                                {% else %}
+                                                <a href="#" style="width: fit-content;">
+                                                    <button class="btn btn-danger btn-sm" type="button"
+                                                        style="background-color: rgba(15, 26, 27, 0.384);margin: 0;">
+                                                        plyed</button>
+                                                </a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </div>
+    <script>
+        function printTable() {
+            let printContents = document.querySelector("table").outerHTML;
+            let printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<h3>Booking Details</h3>');
+            printWindow.document.write(printContents);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
