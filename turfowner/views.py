@@ -212,18 +212,16 @@ def addreview(request,id):
     return render(request, 'turfdetails.html', context)
    
 
-def turfbookings(request,id):
-    turf=turf_table.objects.get(id=id)
-    turfbookings=BookingSlot.objects.filter(turf=turf,expired=False).first()
-
-    # for booking in turfbookings:
-    #     if isinstance(booking.booking_date, time):  # Fix the type check
-    turfbookings.booking_date = datetime.combine(date.today(), turfbookings.booking_date)
-    print(turfbookings.booking_date)
-    return render (request,'turfbookings.html',{'turfbookings':turfbookings})
-
 from datetime import datetime, date,time
+def turfbookings(request, id):
+    turf = turf_table.objects.get(id=id)
+    turfbookings = BookingSlot.objects.filter(turf=turf, expired=False).first()
 
+    if turfbookings and turfbookings.booking_date:
+        turfbookings.booking_date = datetime.combine(date.today(), turfbookings.booking_date)
+    print(turfbookings)
+    context = {'turf': turf, 'turfbookings': turfbookings}
+    return render(request, 'turfbookings.html', context)
 def allbookings(request):
     allbookings=BookingSlot.objects.filter(turf__ownername=request.user).all()
 
